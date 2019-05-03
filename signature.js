@@ -1,3 +1,8 @@
+/*!
+ * signature.js v1.0.0
+ * (c) 2019-2019 Chasen Gao
+ * Released under the MIT/Apache 2.0 License.
+ */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
