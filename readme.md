@@ -1,3 +1,7 @@
+
+<img src="https://img.shields.io/crates/l/rustc-serialize/0.3.24.svg">
+
+
 JavaScript原生实现的网页签名插件，支持横屏签名。
 
 #### 说在前面
