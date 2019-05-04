@@ -73,21 +73,19 @@ new Signature(option).redo(function(){
 
 ##### getContentBase64()
 ```$xslt
-new Signature(option).getContentBase64()
+new Signature(option).getContentBase64(false,function(value){
+    console.log(value)
+})
 返回当前画布的base64数据
 ```
 
 要在不旋转画布的情况下，强制获取横屏数据（现有数据角度转-90度）
 ```$xslt
-new Signature(option).getContentBase64(true)
-```
-
-如果需要添加回调函数，就必须要输入第一个参数，如：
-```$xslt
-new Signature(option).getContentBase64(false,function(){
-    console.log(1)
+new Signature(option).getContentBase64(true,function(value){
+    console.log(value)
 })
 ```
+getContentBase64两个参数必填，value值为画板取到的数据
 
 #### getBlob()
 ```$xslt
