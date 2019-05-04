@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../signature.js"></script>
+</head>
+<body>
+<h1>请使用Chrome浏览器打开控制台,输出信息将在控制台中输出</h1>
+
+<hr>
+<canvas id="init" width="400" height="300"></canvas>
+<br>
+<button id="getBase64">获取base64</button>
+<button id="getBase64H">获取横向base64</button>
+<button id="getBlob">获取Blob</button>
+<button id="getFile">获取File</button>
+<button id="reset">重置画板</button>
+<button id="undo">后退一步</button>
+<button id="redo">前进一步</button>
+<script>
+    let test = new Signature({
+        el: '#init',
+        lineWidth: 4,
+        lineColor: '#5C73FC',
+        overflow: false,
+        background: '#dddddd'
+    });
+    test.create();
+
+    document.getElementById('getBase64').onclick = function () {
+        test.getContentBase64(false,function (value) {
+            console.log(value);
+            console.log('您获取到了正常base64数据')
+        })
+    };
+
+    document.getElementById('getBase64H').onclick = function () {
+        test.getContentBase64(true,function (value) {
+            console.log(value);
+            console.log('您获取到了横向base64数据')
+        })
+    };
+
+    document.getElementById('getBlob').onclick = function () {
+        console.log(test.getBlob());
+        console.log('您获取到了Blob对象')
+    };
+
+    document.getElementById('getFile').onclick = function () {
+        console.log(test.getFile());
+        console.log('您获取到了File对象')
+    };
+
+    document.getElementById('reset').onclick = function () {
+        test.reset();
+        console.log('您已经重制了画板')
+    };
+
+    document.getElementById('undo').onclick = function () {
+        test.undo();
+        console.log('后退了一步')
+    };
+
+    document.getElementById('redo').onclick = function () {
+        test.redo();
+        console.log('前进了一步')
+    }
+
+</script>
+</body>
+
+</html>

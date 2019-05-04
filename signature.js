@@ -19,6 +19,7 @@
     };
     this.status = [];
     this.step = -1;
+    this.firstStatus = '';
     const el = document.querySelector(this.option.el);
     if (el.tagName !== 'CANVAS') {
         throw new Error('Target element must be canvas')
@@ -33,6 +34,7 @@
         }
         let mp = '';
         const userAgent = navigator.userAgent.toLocaleLowerCase();
+        that.firstStatus = that.getContentBase64();
         if (userAgent.indexOf('iphone') !== -1 || userAgent.indexOf('android') !== -1) {
             // 用户为移动设备
             el.addEventListener('touchstart', function (e) {
@@ -94,11 +96,11 @@
             }
 
             // 创建横向画布
-            let hideenEl = document.createElement('canvas');
-            hideenEl.dataset.none = '1';
-            hideenEl.width = el.offsetHeight;
-            hideenEl.height = el.offsetWidth;
-            document.body.appendChild(hideenEl);
+            let hiddenEl = document.createElement('canvas');
+            hiddenEl.dataset.none = '1';
+            hiddenEl.width = el.offsetHeight;
+            hiddenEl.height = el.offsetWidth;
+            document.body.appendChild(hiddenEl);
 
             let hiddenCtx = document.querySelector('canvas[data-none="1"]').getContext("2d");
             let img = new Image();
@@ -137,10 +139,23 @@
         return new File([u8arr], `${fn}.${suffix}`, {type: mime})
     };
     this.reset = function () {
-        ctx.fillStyle = "#ffffff";
-        ctx.beginPath();
-        ctx.fillRect(0, 0, el.offsetWidth, el.offsetHeight);
-        ctx.closePath();
+        if(!that.firstStatus){
+            return false;
+        }else{
+            ctx.clearRect(0, 0, el.offsetWidth, el.offsetHeight);
+            let canvasPic = new Image();
+            try {
+                canvasPic.src = that.firstStatus;
+                canvasPic.addEventListener('load', () => {
+                    ctx.drawImage(canvasPic, 0, 0);
+                });
+                that.step = -1
+                that.status = []
+            } catch (e) {
+
+            }
+
+        }
     };
 
     function saveStatus() {
@@ -182,7 +197,7 @@
                 });
             }
         } else {
-            console.log('no more redo');
+            console.warn('no more redo');
             if (callback) callback()
         }
     }
